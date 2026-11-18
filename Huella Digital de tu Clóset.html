@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Huella Digital de tu Clóset</title>
+<style>
+:root{--bg:#E6D9DC;--card:#F8F0E7;--ink:#2a2427;--mut:#5f5055;--blue:#7A2E3B;--thread:#E8A9B8;--line:#cdb9bd;--ok:#9BD8C0;--warn:#F0B8B0;--sky:#BFD0E6;--out:#2a2427;--btn:#F8F0E7;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#2b2226;--card:#3a2d33;--ink:#f6ece6;--mut:#cdb9bd;--blue:#E8A9B8;--line:#5a4750;--out:#f6ece6;--btn:#2a2427}}
+:root[data-theme="dark"]{--bg:#2b2226;--card:#3a2d33;--ink:#f6ece6;--mut:#cdb9bd;--blue:#E8A9B8;--line:#5a4750;--out:#f6ece6;--btn:#2a2427}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Comic Sans MS","Chalkboard SE",cursive,sans-serif}
+h1,h2,h3{font-weight:700;line-height:1.15;margin:0 0 .4em}h1{font-size:clamp(2rem,7vw,3.2rem)}h2{font-size:1.8rem}h3{font-size:1.15rem}
+.wrap{max-width:980px;margin:0 auto;padding:0 14px 40px}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
+header.top::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+nav{display:flex;gap:6px;overflow-x:auto;padding:10px 14px;max-width:980px;margin:0 auto}
+nav a{padding:5px 14px;border:2.5px solid var(--out);border-radius:255px 15px 225px 15px/15px 225px 15px 255px;background:var(--sky);color:#2a2427;white-space:nowrap;font-weight:700;cursor:pointer}
+nav a:nth-child(even){background:var(--ok)}nav a.on{background:var(--thread);transform:rotate(-2deg)}
+.card{background:var(--card);border:3px solid var(--out);border-radius:18px 6px 20px 8px/8px 20px 6px 18px;padding:16px;margin:14px 0;box-shadow:4px 4px 0 var(--thread)}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.dc{display:contents}
+label{display:flex;flex-direction:column;font-size:.85rem;color:var(--mut);gap:4px;font-weight:700}
+input,select,textarea{font:inherit;padding:8px;border:2.5px solid var(--out);border-radius:10px 4px 10px 4px;background:var(--bg);color:var(--ink);min-width:0;width:100%}
+button{font:inherit;font-weight:700;padding:9px 16px;border-radius:255px 15px 225px 15px/15px 225px 15px 255px;border:3px solid var(--out);background:var(--blue);color:var(--btn);cursor:pointer}
+button.alt{background:var(--sky);color:#2a2427}button.bad{background:var(--warn);color:#2a2427}button:hover{transform:rotate(-1deg)}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,nav a:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;align-items:center}
+.kpi b{display:block;font-size:1.9rem;color:var(--blue)}.kpi span,.note,small{color:var(--mut);font-size:.85rem}
+.scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:620px;font-size:.88rem}th,td{text-align:left;padding:6px 8px;border-bottom:2px dotted var(--line)}
+.bar{display:flex;align-items:center;gap:8px;margin:6px 0}.bar i{display:block;height:16px;background:var(--thread);border:2.5px solid var(--out);border-radius:8px 3px 8px 3px;min-width:6px}.bar:nth-child(even) i{background:var(--ok)}.bar em{font-style:normal;min-width:110px;font-weight:700;font-size:.9rem}
+.tag{padding:2px 10px;border:2px solid var(--out);border-radius:99px;font-size:.75rem;font-weight:700;background:var(--line);color:#2a2427}
+.t-Transformar{background:var(--thread)}.t-Reparar{background:var(--warn)}.t-Donar,.t-Vendido{background:var(--sky)}.t-Conservar{background:var(--ok)}.t-Usar{background:#F3E2A9}
+.it{cursor:pointer;margin:0}.it img,.ph{width:100%;aspect-ratio:4/3;object-fit:cover;border:2.5px solid var(--out);border-radius:10px;margin-bottom:8px}.ph{display:flex;align-items:center;justify-content:center;font-size:3rem;background:var(--sky)}
+.co{margin-top:6px;padding:4px 8px;background:var(--ok);color:#2a2427;border:2px solid var(--out);border-radius:10px;font-size:.82rem;font-weight:700}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:20;display:flex;align-items:flex-start;justify-content:center;overflow-y:auto;padding:calc(env(safe-area-inset-top,0px) + 14px) 12px 24px}.mb{max-width:560px;width:100%}
+.mb img.big,video{width:100%;border-radius:10px;border:2.5px solid var(--out)}
+.av{font-size:2.2rem}.avs{display:flex;gap:6px;flex-wrap:wrap}.avs button{padding:2px 8px;font-size:1.5rem;background:var(--card)}.avs button.sel{background:var(--thread)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom,0px) + 16px);background:var(--out);color:var(--bg);padding:8px 16px;border-radius:99px;z-index:30;font-weight:700;max-width:90%}
+#pv img{max-width:200px;border-radius:10px;border:2.5px solid var(--out)}
+@media print{header.top,.noprint,button{display:none}}
+</style></head><body>
+<header class="top"><nav id="nav"></nav></header>
+<main class="wrap" id="app"></main><div id="modal"></div><div id="toast"></div>
+<script>
+var CATS={"Ropa":{c:0,a:0,w:.4,i:"👕"},"Calzado":{c:14,a:8000,w:.9,i:"👟"},"Electrónica":{c:60,a:2000,w:.5,i:"📱"},"Muebles":{c:3,a:300,w:10,i:"🪑"},"Libros":{c:2,a:2000,w:.4,i:"📚"},"Juguetes":{c:4,a:300,w:.4,i:"🧸"},"Hogar":{c:4,a:500,w:1,i:"🏠"},"Deportes":{c:6,a:800,w:1.5,i:"🚲"},"Electrodomésticos":{c:30,a:1500,w:4,i:"🔌"},"Herramientas":{c:5,a:400,w:2,i:"🛠️"},"Instrumentos":{c:8,a:300,w:3,i:"🎸"},"Otro":{c:4,a:500,w:1,i:"📦"}};
+var MAT={"Algodón":{c:7,a:10000},"Denim":{c:20,a:11000},"Poliéster":{c:14.2,a:150},"Lana":{c:13.8,a:8000},"Mezcla algodón-poliéster":{c:10.5,a:5000}};
+var TIPO={"Camiseta":.18,"Camisa":.25,"Jean":.65,"Pantalón":.45,"Buso":.5,"Chaqueta":.8,"Vestido":.3,"Falda":.25};
+var EST=["Nuevo","Como nuevo","Bueno","Regular","Dañado"],AVS=["🌱","🦋","🎶","👨","⚽","🦾","🧵","🌎","🐝","🌻"],REUSE=.8;
+function mk(i,sid,t,cat,kg,est,uso,ani,ori,pre,tipo,mat){var e=emb(cat,mat,kg);return{id:"d"+i,sid:sid,t:t,d:"Artículo de ejemplo para la demo.",cat:cat,tipo:tipo||"",mat:mat||"",kg:kg,c:e.c,a:e.a,uso:uso,ani:ani,ori:ori,pre:pre,est:est,img:"",st:"open",ts:Date.now()-i*1e6}}
+var SEEDP=[{id:"s1",n:"Camila",city:"Medellín",av:"🌸",w:""},{id:"s2",n:"Andrés",city:"Bogotá",av:"🐝",w:""},{id:"s3",n:"Lucía",city:"Cali",av:"🌻",w:""}],SEED=[mk(1,"s1","Chaqueta de jean talla M","Ropa",.8,"Bueno",3,2,180000,70000,"Chaqueta","Denim"),mk(2,"s2","Celular Samsung A32","Electrónica",.2,"Bueno",300,2,900000,350000),mk(3,"s3","Escritorio de madera","Muebles",15,"Como nuevo",200,3,400000,150000),mk(4,"s1","Bicicleta de ruta","Deportes",11,"Bueno",30,3,1200000,500000),mk(5,"s2","Novelas (10 libros)","Libros",4,"Bueno",2,4,300000,90000),mk(6,"s3","Licuadora Oster","Electrodomésticos",3,"Bueno",150,3,250000,80000)];
+var DB=null,UID="local",ME=null,out=false,items=[],profs={},closet=[],tab="inicio",umbral=5,draft=null,IMG="",filt={cat:"Todas",q:"",open:true},stream=null;
+var $=function(i){return document.getElementById(i)},fmt=function(n,d){return Number(n).toLocaleString("es-CO",{maximumFractionDigits:d||0})};
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function ls(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k));localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
+function toast(m){$("toast").innerHTML="<div class='toast' role='status'>"+esc(m)+"</div>";setTimeout(function(){$("toast").innerHTML=""},3200)}
+function err(e){toast("No se pudo guardar: "+((e&&e.message)||e))}
+function opts(a,s){return(Array.isArray(a)?a:Object.keys(a)).map(function(k){return"<option"+(k===s?" selected":"")+">"+k+"</option>"}).join("")}
+function emb(cat,mat,kg){var f=cat==="Ropa"?MAT[mat]:CATS[cat];return{c:kg*f.c,a:kg*f.a}}
+function eq(c,a){return"≈ "+fmt(c/.17)+" km en carro, "+fmt(a/60)+" duchas de agua y "+fmt(c/21,1)+" árboles absorbiendo CO₂ por un año"}
+function pn(u){var p=profs[u];return p?p.av+" "+p.n:(u===UID&&ME?ME.av+" "+ME.n:"Vendedor")}
+function modal(h){$("modal").innerHTML=h?"<div class='ov' onclick='if(event.target==this)modal(\"\")'><div class='card mb'>"+h+"</div></div>":""}
+
+/* ---------- datos ---------- */
+function saveItem(it){var i=items.findIndex(function(x){return x.id===it.id});if(i<0)items.unshift(it);else items[i]=it;
+ if(DB)DB.collection("items").doc(it.id).set(it).catch(err);else ls("items",items)}
+function delItem(id){items=items.filter(function(x){return x.id!==id});if(DB)DB.collection("items").doc(id).delete().catch(err);else ls("items",items);modal("");render()}
+function saveCloset(){if(DB)DB.collection("data/users/"+UID).doc("closet").set({list:closet}).catch(err);else ls("closet_"+UID,closet)}
+function saveProfile(p){if(DB){var q=Object.assign({},profs[UID]||{},p,{id:UID});profs[UID]=q;ME=q;DB.collection("profiles").doc(UID).set(q).catch(err);return}var us=ls("users")||{};Object.keys(us).forEach(function(k){if(us[k].id===UID)us[k]=Object.assign(us[k],p)});ls("users",us);loadU()}
+function loadU(){var us=ls("users")||{};profs={};Object.keys(us).forEach(function(k){profs[us[k].id]=us[k]});SEEDP.forEach(function(p){profs[p.id]=p});UID=ls("sess")||"local";ME=UID!=="local"?profs[UID]||null:null;closet=ls("closet_"+UID)||[]}
+async function hsh(p,s){if(!window.crypto||!crypto.subtle)return btoa(s+p);var b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(s+p));return[].map.call(new Uint8Array(b),function(x){return("0"+x.toString(16)).slice(-2)}).join("")}
+async function regis(){var n=$("pn").value.trim(),e=$("pe").value.trim().toLowerCase(),p=$("pp").value;if(!n||!/^\S+@\S+\.\S+$/.test(e)||p.length<6){toast("Revisa nombre, correo y contraseña (mín. 6)");return}
+ var us=ls("users")||{};if(us[e]){toast("Ese correo ya tiene cuenta");return}
+ var id="u"+Date.now().toString(36),s=Math.random().toString(36).slice(2);us[e]={id:id,e:e,n:n,city:$("pc").value.trim(),w:$("pw").value.replace(/\D/g,""),av:avSel,s:s,h:await hsh(p,s)};ls("users",us);ls("sess",id);loadU();toast("¡Bienvenida/o, "+n+"!");go("mercado")}
+async function login(){var us=ls("users")||{},u=us[$("le").value.trim().toLowerCase()];if(!u||u.h!==await hsh($("lp").value,u.s)){toast("Correo o contraseña incorrectos");return}ls("sess",u.id);loadU();toast("¡Hola, "+u.n+"!");go("mercado")}
+function logout(){if(DB){toast("Tu sesión es tu cuenta de Claude");return}ls("sess","");loadU();go("inicio")}
+function ask(k){modal("<h3>"+(k==1?"📷 Permiso de cámara":"🖼️ Permiso de galería")+"</h3><p>Huella Digital necesita "+(k==1?"usar tu cámara":"acceder a tu galería")+" solo para la foto de este artículo. No guarda nada más.</p><div class='row'><button onclick='modal(\"\");"+(k==1?"cam()":"$(\"fg\").click()")+"'>Permitir</button><button class='alt' onclick='modal(\"\")'>Ahora no</button></div>")}
+function local(){var s=ls("items");if(!s){s=SEED;ls("items",s)}items=s;loadU();render()}
+function init(){var a=window.claude&&claude.use?Promise.all([claude.use("db"),claude.use("user")]):Promise.resolve([null,null]);
+ a.then(function(r){if(!r[0]||!r[1]){local();return}DB=r[0];r[1].id().then(function(id){UID=id||"local";conn()})}).catch(local)}
+function rr(){var a=document.activeElement;if(tab==="mercado"&&$("lst")){lst();return}if(a&&/INPUT|SELECT|TEXTAREA/.test(a.tagName))return;render()}
+function conn(){DB.collection("profiles").onSnapshot(function(s){profs={};s.docs.forEach(function(d){profs[d.id]=d.data()});ME=profs[UID]||null;rr()},err);
+ DB.collection("items").onSnapshot(function(s){items=s.docs.map(function(d){return d.data()}).sort(function(a,b){return b.ts-a.ts});rr()},err);
+ DB.collection("data/users/"+UID).doc("closet").onSnapshot(function(s){var d=s.data();closet=d&&d.list||[];rr()},err);render()}
+function vGateDB(){return"<div class='card'><h2>Crea tu perfil</h2><p class='note'>Entras con tu cuenta de Claude; aquí solo eliges cómo te verá la comunidad.</p><div class='grid'><label>Nombre o apodo<input id='pn' maxlength='30'></label><label>Ciudad<input id='pc' maxlength='30' value='Bogotá'></label><label>WhatsApp (opcional; lo verá quien te compre)<input id='pw' inputmode='tel' maxlength='20'></label></div><p><small>Avatar</small></p><div class='avs'>"+AVS.map(function(a){return"<button type='button' class='"+(a===avSel?"sel":"")+"' onclick='avSel=\""+a+"\";pickAv(this)'>"+a+"</button>"}).join("")+"</div><div class='row'><button onclick='regisDB()'>Guardar y entrar</button></div></div>"}
+function regisDB(){var n=$("pn").value.trim();if(!n){toast("Escribe tu nombre o apodo");return}saveProfile({n:n,city:$("pc").value.trim(),w:$("pw").value.replace(/\D/g,""),av:avSel});toast("¡Bienvenida/o, "+n+"!");go("mercado")}
+
+/* ---------- navegación ---------- */
+var TABS=[["inicio","🏠 Inicio"],["closet","👚 Mi clóset"],["mercado","🛍️ Comprar"],["vender","💸 Vender"],["comunidad","🌍 Comunidad"],["perfil","🙋 Perfil"]];
+function go(t){tab=t;modal("");render();scrollTo(0,0)}
+function render(){
+ $("nav").innerHTML=TABS.map(function(t){return"<a tabindex='0' role='button' class='"+(t[0]===tab?"on":"")+"' onclick='go(\""+t[0]+"\")'>"+t[1]+"</a>"}).join("");
+ var v=tab==="inicio"?vInicio():tab==="closet"?vCloset():null;
+ if(v===null){v=(!ME||out)?vGate():tab==="mercado"?vMercado():tab==="vender"?vVender():tab==="comunidad"?vCom():vPerfil()}
+ $("app").innerHTML=v;if(tab==="vender"&&ME&&!out)prev();
+}
+function stats(uid){var s={pub:0,sold:0,bought:0,c:0,a:0,m:0};items.forEach(function(it){
+ if(it.sid===uid){s.pub++;if(it.st==="sold"){s.sold++;s.c+=it.c*REUSE;s.a+=it.a*REUSE}}
+ if(it.bid===uid){s.bought++;s.m+=Math.max(0,it.ori-it.pre);s.c+=it.c*REUSE;s.a+=it.a*REUSE}});return s}
+function badge(c){return c>=300?"🌎 Guardián del planeta":c>=100?"🌳 Árbol":c>=20?"🌿 Brote":"🌱 Semilla"}
+
+/* ---------- inicio ---------- */
+function vInicio(){var c=0,a=0,sold=0;items.forEach(function(it){if(it.st==="sold"){sold++;c+=it.c*REUSE*2;a+=it.a*REUSE*2}});
+ return"<section style='padding:20px 0'><h1>¿Cuánto pesa tu clóset en el planeta?</h1><p class='note' style='font-size:1.05rem;max-width:60ch'>Mide el agua y el CO₂e de lo que tienes, descubre cuánto te cuesta cada uso y dale una segunda vida: repáralo, transfórmalo o véndelo a alguien que sí lo va a usar.</p><div class='row'><button onclick='go(\"closet\")'>Medir mi clóset</button><button class='alt' onclick='go(\"mercado\")'>Explorar el mercado</button><button class='alt' onclick='go(\"vender\")'>Vender algo</button></div></section>"+
+ "<div class='grid'>"+[[fmt(items.length),"artículos publicados"],[fmt(sold),"artículos con nuevo dueño"],[fmt(c,1)+" kg","CO₂e evitado por la comunidad"],[fmt(a)+" L","agua que no se gastó"]].map(function(k){return"<div class='card kpi'><b>"+k[0]+"</b><span>"+k[1]+"</span></div>"}).join("")+"</div>"+
+ "<div class='card'><h3>¿Cómo funciona?</h3><p>1) Mide tu clóset. 2) Publica lo que no usas, sea ropa o cualquier otra cosa. 3) Compra de segunda mano y mira el CO₂e que evitas, porque fabricar algo nuevo emite mucho más que reutilizarlo.</p><p class='note'>Dato: más del 30% de la ropa del clóset nunca se usa en el año y el 73% termina incinerada o en basureros.</p></div>"+
+ "<div class='card'><h3>Ventaja frente a otras apps</h3><p class='note'>Good On You califica marcas, y Whering o Stylebook arman outfits. Esta herramienta une impacto ambiental (agua y CO₂), impacto financiero (costo por uso) y una solución práctica: reparar, transformar, donar o vender.</p></div>"}
+
+/* ---------- registro / sesión ---------- */
+var avSel="🌱";
+var gm="up";
+function vGate(){if(DB)return vGateDB();var t="<div class='row'><button class='"+(gm==="in"?"":"alt")+"' onclick='gm=\"in\";render()'>Iniciar sesión</button><button class='"+(gm==="up"?"":"alt")+"' onclick='gm=\"up\";render()'>Crear cuenta</button></div>";
+ if(gm==="in")return"<div class='card'><h2>Bienvenida/o de vuelta</h2>"+t+"<div class='grid'><label>Correo<input id='le' type='email' autocomplete='email'></label><label>Contraseña<input id='lp' type='password' autocomplete='current-password'></label></div><div class='row'><button onclick='login()'>Entrar</button></div></div>";
+ return"<div class='card'><h2>Crea tu perfil</h2>"+t+"<div class='grid'><label>Nombre o apodo<input id='pn' maxlength='30'></label><label>Correo<input id='pe' type='email' autocomplete='email'></label><label>Contraseña (mín. 6)<input id='pp' type='password' autocomplete='new-password'></label><label>Ciudad<input id='pc' maxlength='30' value='Bogotá'></label><label>WhatsApp (opcional, solo lo ve quien te compra)<input id='pw' inputmode='tel' maxlength='20'></label></div><p><small>Avatar</small></p><div class='avs'>"+AVS.map(function(a){return"<button type='button' class='"+(a===avSel?"sel":"")+"' onclick='avSel=\""+a+"\";pickAv(this)'>"+a+"</button>"}).join("")+"</div><div class='row'><button onclick='regis()'>Registrarme y entrar</button></div><p class='note'>Demo: las cuentas se guardan en este dispositivo y la contraseña se guarda cifrada (hash), nunca en texto plano.</p></div>"}
+function pickAv(b){[].forEach.call(b.parentNode.children,function(x){x.className=""});b.className="sel"}
+
+/* ---------- mercado ---------- */
+function card(it){return"<div class='card it' tabindex='0' onclick='det(\""+it.id+"\")'>"+(it.img?"<img src='"+it.img+"' alt='"+esc(it.t)+"'>":"<div class='ph'>"+CATS[it.cat].i+"</div>")+"<h3>"+esc(it.t)+"</h3><div><b>$"+fmt(it.pre)+"</b> "+(it.st==="sold"?"<span class='tag t-Vendido'>Vendido</span>":"")+"</div><small>"+it.cat+" · "+esc(it.est)+" · "+esc(pn(it.sid))+"</small><div class='co'>🌿 evita "+fmt(it.c*REUSE,1)+" kg CO₂e</div></div>"}
+function vMercado(){var l=items.filter(function(it){return(filt.cat==="Todas"||it.cat===filt.cat)&&(!filt.open||it.st!=="sold")&&(it.t+" "+(it.d||"")).toLowerCase().indexOf(filt.q.toLowerCase())>-1});
+ var tot=l.reduce(function(s,it){return s+it.c*REUSE},0);
+ return"<h2>Comprar de segunda mano</h2><div class='card'><div class='grid'><label>Buscar<input id='q' value='"+esc(filt.q)+"' oninput='filt.q=this.value;lst()'></label><label>Categoría<select onchange='filt.cat=this.value;lst()'>"+opts(["Todas"].concat(Object.keys(CATS)),filt.cat)+"</select></label><label>Mostrar<select onchange='filt.open=this.value===\"1\";lst()'><option value='1'"+(filt.open?" selected":"")+">Solo disponibles</option><option value='0'"+(filt.open?"":" selected")+">Todos</option></select></label></div></div><div id='lst'>"+lstH(l,tot)+"</div>"}
+function lstH(l,tot){return(l.length?"<p class='note'>"+l.length+" artículos. Si compras todo esto de segunda mano, evitas unos <b>"+fmt(tot)+" kg de CO₂e</b>.</p><div class='grid' style='grid-template-columns:repeat(auto-fill,minmax(210px,1fr))'>"+l.map(card).join("")+"</div>":"<div class='card'>Aún no hay artículos aquí. ¡Sé la primera persona en publicar!</div>")}
+function lst(){var l=items.filter(function(it){return(filt.cat==="Todas"||it.cat===filt.cat)&&(!filt.open||it.st!=="sold")&&(it.t+" "+(it.d||"")).toLowerCase().indexOf(filt.q.toLowerCase())>-1});$("lst").innerHTML=lstH(l,l.reduce(function(s,it){return s+it.c*REUSE},0))}
+function det(id){var it=items.find(function(x){return x.id===id});if(!it)return;var s=it.c*REUSE,mine=it.sid===UID,sp=profs[it.sid];
+ modal((it.img?"<img class='big' src='"+it.img+"' alt=''>":"<div class='ph'>"+CATS[it.cat].i+"</div>")+"<h2>"+esc(it.t)+"</h2><h3>$"+fmt(it.pre)+" <small>(nuevo: $"+fmt(it.ori)+")</small></h3><p>"+esc(it.d)+"</p><p class='note'>"+it.cat+(it.cat==="Ropa"?" · "+esc(it.tipo)+" · "+esc(it.mat):"")+" · "+esc(it.est)+" · "+fmt(it.kg,2)+" kg · "+fmt(it.uso)+" usos/año durante "+fmt(it.ani,1)+" años · Costo por uso original: $"+fmt(it.ori/Math.max(it.uso*it.ani,1))+"</p>"+
+ "<div class='card' style='box-shadow:none;background:var(--ok);color:#2a2427'><b>🌿 Impacto de comprarlo usado</b><br>Fabricarlo nuevo emitió unos "+fmt(it.c,1)+" kg CO₂e y "+fmt(it.a)+" L de agua. Reutilizarlo evita cerca de <b>"+fmt(s,1)+" kg CO₂e</b> ("+eq(s,it.a*REUSE)+").</div><p>Vende: "+esc(pn(it.sid))+(sp&&sp.city?" · "+esc(sp.city):"")+"</p>"+
+ (it.st==="sold"?"<span class='tag t-Vendido'>Ya vendido</span>":mine?"<div class='row'><button class='bad' onclick='delItem(\""+it.id+"\")'>Eliminar publicación</button></div>":"<div class='row'><button onclick='buy(\""+it.id+"\")'>Quiero comprarlo</button></div>")+"<div class='row'><button class='alt' onclick='modal(\"\")'>Cerrar</button></div>")}
+function buy(id){var it=items.find(function(x){return x.id===id}),sp=profs[it.sid];it.st="sold";it.bid=UID;it.tb=Date.now();saveItem(it);
+ modal("<h2>¡Listo! 🎉</h2><p>Reservaste «"+esc(it.t)+"» y evitaste unos <b>"+fmt(it.c*REUSE,1)+" kg de CO₂e</b>.</p><p>Coordina la entrega con "+esc(pn(it.sid))+": "+(sp&&sp.w?"<b>WhatsApp "+esc(sp.w)+"</b>":"esa persona no dejó contacto; escríbele por tu medio habitual.")+"</p><div class='row'><button onclick='go(\"perfil\")'>Ver mi impacto</button></div>")}
+
+/* ---------- vender ---------- */
+function vVender(){var d=draft||{};draft=null;IMG="";var cat=d.cat||"Ropa",ro=cat==="Ropa";
+ return"<h2>Vender algo que te sobra</h2><p class='note'>Puede ser ropa o cualquier objeto: electrónicos, muebles, libros, juguetes y más.</p><div class='card'><div class='grid'>"+
+ "<label>Categoría<select id='fcat' onchange='catCh()'>"+opts(CATS,cat)+"</select></label>"+
+ "<div class='dc' id='ropaF' style='display:"+(ro?"contents":"none")+"'><label>Tipo de prenda<select id='ftipo' onchange='catCh()'>"+opts(TIPO,d.tipo)+"</select></label><label>Material<select id='fmat' oninput='prev()'>"+opts(MAT,d.mat)+"</select></label></div>"+
+ "<label>Título<input id='ftit' maxlength='60' placeholder='Ej: Chaqueta de jean talla M'></label>"+
+ "<label>Peso aprox. (kg)<input id='fkg' type='number' step='0.05' min='0.05' value='"+(d.kg||CATS[cat].w)+"' oninput='prev()'></label>"+
+ "<label>Estado<select id='fest'>"+opts(EST.slice(0,4),d.est)+"</select></label>"+
+ "<label>Usos por año<input id='fuso' type='number' min='0' value='"+(d.uso||5)+"' oninput='prev()'></label>"+
+ "<label>Años que lo tuviste<input id='fani' type='number' min='0.5' step='0.5' value='"+(d.ani||1)+"' oninput='prev()'></label>"+
+ "<label>Precio original (COP)<input id='fori' type='number' min='0' value='"+(d.ori||60000)+"' oninput='prev()'></label>"+
+ "<label>Precio de venta (COP)<input id='fpre' type='number' min='0' value='"+Math.round((d.ori||60000)*.4)+"'></label></div>"+
+ "<label style='margin-top:12px'>Descripción (talla, marca, detalles)<textarea id='fdes' rows='3' maxlength='400'></textarea></label>"+
+ "<h3 style='margin-top:14px'>Foto</h3><p class='note'>Primero te pedimos permiso y luego tu dispositivo confirmará el acceso para usar la cámara o acceder a tu galería. Solo se usa para esta foto.</p><div class='row'><button type='button' class='alt' onclick='ask(1)'>📷 Tomar foto</button><button type='button' class='alt' onclick='ask(2)'>🖼️ Elegir de la galería</button></div>"+
+ "<input id='fg' type='file' accept='image/*' hidden onchange='onFile(event)'><input id='fc' type='file' accept='image/*' capture='environment' hidden onchange='onFile(event)'><div id='pv' style='margin-top:10px'></div></div>"+
+ "<div class='card' id='pcv'></div><div class='row'><button onclick='publicar()'>Publicar en el mercado</button></div>"}
+function catCh(){var c=$("fcat").value;$("ropaF").style.display=c==="Ropa"?"contents":"none";$("fkg").value=c==="Ropa"?TIPO[$("ftipo").value]:CATS[c].w;prev()}
+function rd(){var c=$("fcat").value,kg=parseFloat($("fkg").value)||.1,mat=$("fmat").value,e=emb(c,mat,kg),uso=Math.max(0,parseFloat($("fuso").value)||0),ani=Math.max(.5,parseFloat($("fani").value)||1),ori=Math.max(0,parseFloat($("fori").value)||0);
+ return{cat:c,tipo:$("ftipo").value,mat:mat,kg:kg,c:e.c,a:e.a,uso:uso,ani:ani,ori:ori}}
+function prev(){var r=rd(),t=Math.max(r.uso*r.ani,.5);
+ $("pcv").innerHTML="<h3>Huella de este artículo</h3><div class='grid'><div class='kpi'><b>"+fmt(r.c,1)+" kg</b><span>CO₂e al fabricarlo</span></div><div class='kpi'><b>"+fmt(r.a)+" L</b><span>agua usada</span></div><div class='kpi'><b>"+fmt(r.c*REUSE,1)+" kg</b><span>CO₂e que evita quien lo compra usado</span></div><div class='kpi'><b>$"+fmt(r.ori/t)+"</b><span>costo por uso que tuviste</span></div></div><p class='note'>"+eq(r.c*REUSE,r.a*REUSE)+(r.uso<umbral?" · Subutilizado: ¡mejor que lo use alguien más!":"")+" · Valores de referencia aproximados.</p>"}
+function onFile(e){var f=e.target.files[0];if(f)shrink(URL.createObjectURL(f))}
+function shrink(src,vid){var go2=function(w,h,draw){var r=Math.min(1,520/Math.max(w,h)),c=document.createElement("canvas");c.width=Math.round(w*r);c.height=Math.round(h*r);draw(c.getContext("2d"),c.width,c.height);IMG=c.toDataURL("image/jpeg",.65);$("pv").innerHTML="<img src='"+IMG+"' alt='Vista previa'>"};
+ if(vid)return go2(vid.videoWidth,vid.videoHeight,function(x,w,h){x.drawImage(vid,0,0,w,h)});
+ var im=new Image();im.onload=function(){go2(im.width,im.height,function(x,w,h){x.drawImage(im,0,0,w,h)})};im.src=src}
+function cam(){if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){$("fc").click();return}
+ navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"}}).then(function(s){stream=s;modal("<h3>Tomar foto</h3><video id='vd' autoplay playsinline muted></video><div class='row'><button onclick='snap()'>📸 Capturar</button><button class='alt' onclick='stopCam()'>Cancelar</button></div>");$("vd").srcObject=s}).catch(function(){toast("No hay acceso a la cámara; elige una foto.");$("fc").click()})}
+function snap(){shrink(null,$("vd"));stopCam()}
+function stopCam(){if(stream)stream.getTracks().forEach(function(t){t.stop()});stream=null;modal("")}
+function publicar(){var t=$("ftit").value.trim();if(!t){toast("Ponle un título");return}var r=rd();
+ saveItem({id:"i"+Date.now().toString(36)+Math.random().toString(36).slice(2,6),sid:UID,t:t,d:$("fdes").value.trim(),cat:r.cat,tipo:r.cat==="Ropa"?r.tipo:"",mat:r.cat==="Ropa"?r.mat:"",kg:r.kg,c:r.c,a:r.a,uso:r.uso,ani:r.ani,ori:r.ori,pre:Math.max(0,parseFloat($("fpre").value)||0),est:$("fest").value,img:IMG,st:"open",ts:Date.now()});
+ toast("¡Publicado! 🌿");go("mercado")}
+
+/* ---------- comunidad y perfil ---------- */
+function vCom(){var ids={};items.forEach(function(it){ids[it.sid]=1;if(it.bid)ids[it.bid]=1});
+ var l=Object.keys(ids).map(function(u){return{u:u,s:stats(u)}}).sort(function(a,b){return b.s.c-a.s.c}),m=Math.max.apply(null,l.map(function(x){return x.s.c}).concat([1]));
+ return"<h2>Comunidad</h2><div class='card'><h3>Ranking de CO₂e evitado</h3>"+(l.length?l.map(function(x,i){return"<div class='bar'><em>"+(i+1)+". "+esc(pn(x.u))+"</em><i style='width:"+Math.max(2,x.s.c/m*50)+"%'></i><small>"+fmt(x.s.c,1)+" kg · "+badge(x.s.c)+"</small></div>"}).join(""):"<p>Aún no hay actividad. Vende o compra para aparecer aquí.</p>")+"</div><div class='card'><h3>Insignias</h3><p>🌱 Semilla: empieza · 🌿 Brote: 20 kg · 🌳 Árbol: 100 kg · 🌎 Guardián del planeta: 300 kg de CO₂e evitados.</p></div>"}
+function vPerfil(){var s=stats(UID),mine=items.filter(function(it){return it.sid===UID});
+ return"<div class='card'><div class='row'><span class='av'>"+ME.av+"</span><div><h2 style='margin:0'>"+esc(ME.n)+"</h2><small>"+esc(ME.city||"")+" · "+badge(s.c)+"</small></div></div><div class='row'><button class='alt' onclick='ME_edit()'>Editar perfil</button><button class='alt' onclick='logout()'>Cerrar sesión</button></div></div>"+
+ "<div class='grid'>"+[[fmt(s.pub),"publicados"],[fmt(s.sold),"vendidos"],[fmt(s.bought),"comprados usados"],[fmt(s.c,1)+" kg","CO₂e evitado"],[fmt(s.a)+" L","agua ahorrada"],["$"+fmt(s.m),"ahorrado al comprar usado"]].map(function(k){return"<div class='card kpi'><b>"+k[0]+"</b><span>"+k[1]+"</span></div>"}).join("")+"</div><div class='card'>Tu actividad equivale a "+eq(s.c,s.a)+" que no se emitieron ni se gastaron.</div>"+
+ "<h3>Mis publicaciones</h3>"+(mine.length?"<div class='grid' style='grid-template-columns:repeat(auto-fill,minmax(210px,1fr))'>"+mine.map(card).join("")+"</div>":"<div class='card'>Aún no has publicado nada.</div>")}
+function ME_edit(){avSel=ME.av;modal("<h3>Editar perfil</h3><div class='grid'><label>Nombre<input id='pn' value='"+esc(ME.n)+"'></label><label>Ciudad<input id='pc' value='"+esc(ME.city||"")+"'></label><label>WhatsApp<input id='pw' value='"+esc(ME.w||"")+"'></label></div><div class='avs' style='margin-top:8px'>"+AVS.map(function(a){return"<button type='button' class='"+(a===avSel?"sel":"")+"' onclick='avSel=\""+a+"\";pickAv(this)'>"+a+"</button>"}).join("")+"</div><div class='row'><button onclick='regis2()'>Guardar</button><button class='alt' onclick='modal(\"\")'>Cancelar</button></div>")}
+function regis2(){var n=$("pn").value.trim()||ME.n;saveProfile({n:n,city:$("pc").value.trim(),w:$("pw").value.replace(/\D/g,""),av:avSel});modal("");render()}
+
+/* ---------- mi clóset (calculadora) ---------- */
+function calc(it){var f=MAT[it.mat],w=TIPO[it.tipo],tot=Math.max(it.usos*it.anios,.5),co2u=w*f.c,cpu=it.precio/tot,sub=it.usos<umbral,rec;
+ if(it.estado==="Dañado")rec="Transformar";else if(it.estado==="Regular")rec="Reparar";else if(sub)rec=cpu>15000?"Donar o vender":"Usar más";else rec="Conservar";
+ return{co2:co2u*it.cant,agua:w*f.a*it.cant,co2u:co2u,cpu:cpu,ipu:co2u/tot,sub:sub,rec:rec}}
+function vCloset(){var form="<h2>Mi clóset</h2><div class='card'><h3>Agregar prendas</h3><div class='grid'><label>Tipo<select id='ct'>"+opts(TIPO)+"</select></label><label>Material<select id='cm'>"+opts(MAT)+"</select></label><label>Cantidad<input id='cq' type='number' min='1' value='1'></label><label>Precio por prenda (COP)<input id='cp' type='number' min='0' value='60000'></label><label>Usos por año<input id='cu' type='number' min='0' value='20'></label><label>Años que la tienes<input id='ca' type='number' min='0.5' step='0.5' value='1'></label><label>Estado<select id='ce'><option>Bueno</option><option>Regular</option><option>Dañado</option></select></label></div><div class='row'><button onclick='addC()'>Agregar al clóset</button><button class='alt' onclick='ejemplo()'>Cargar ejemplo</button><button class='alt' onclick='closet=[];saveCloset();render()'>Vaciar clóset</button></div></div>"+
+ "<div class='card'><label style='max-width:320px'>Umbral de subutilización (usos por año)<input type='number' min='1' value='"+umbral+"' onchange='umbral=parseFloat(this.value)||5;render()'></label></div>";
+ if(!closet.length)return form+"<div class='card'>Tu clóset está vacío. Agrega una prenda o carga el ejemplo.</div>";
+ var n=0,co2=0,ag=0,sub=0,subC=0,cpu=0,ipu=0,circ=0,cat={},rec={};
+ var rows=closet.map(function(it,i){var c=calc(it);n+=it.cant;co2+=c.co2;ag+=c.agua;cpu+=c.cpu*it.cant;ipu+=c.ipu*it.cant;cat[it.tipo]=(cat[it.tipo]||0)+c.co2;rec[c.rec]=(rec[c.rec]||0)+it.cant;if(c.sub){sub+=it.cant;subC+=c.co2}if(["Transformar","Reparar","Donar o vender"].indexOf(c.rec)>-1)circ+=it.cant;
+  return"<tr><td>"+it.cant+" × "+it.tipo+"</td><td>"+it.mat+"</td><td>"+it.estado+"</td><td>"+fmt(it.usos)+"/año</td><td>$"+fmt(c.cpu)+"</td><td>"+fmt(c.co2u,1)+" kg</td><td><span class='tag t-"+c.rec.split(" ")[0]+"'>"+c.rec+"</span></td><td>"+(c.rec==="Donar o vender"?"<button class='alt' onclick='vend("+i+")'>Vender</button>":"")+"<button class='alt' aria-label='Quitar' onclick='closet.splice("+i+",1);saveCloset();render()'>×</button></td></tr>"}).join("");
+ function bars(o){var m=Math.max.apply(null,Object.keys(o).map(function(k){return o[k]}));return Object.keys(o).sort(function(a,b){return o[b]-o[a]}).map(function(k){return"<div class='bar'><em>"+k+"</em><i style='width:"+Math.max(2,Math.round(o[k]/m*55))+"%'></i><small>"+fmt(o[k])+"</small></div>"}).join("")}
+ return form+"<div class='card scroll'><table><thead><tr><th>Prenda</th><th>Material</th><th>Estado</th><th>Uso</th><th>Costo por uso</th><th>CO₂e por prenda</th><th>Recomendación</th><th></th></tr></thead><tbody>"+rows+"</tbody></table></div>"+
+ "<div class='grid'>"+[[fmt(n),"prendas"],[fmt(co2)+" kg","CO₂e acumulado"],[fmt(ag)+" L","agua asociada"],["$"+fmt(cpu/n),"costo por uso promedio"],[fmt(ipu/n,2)+" kg","impacto por postura (CO₂e por uso)"],[Math.round(100*(n-sub)/n)+"%","índice del clóset (prendas activas)"],[fmt(sub),"prendas subutilizadas"],[Math.round(100*circ/n)+"%","índice circular potencial"]].map(function(k){return"<div class='card kpi'><b>"+k[0]+"</b><span>"+k[1]+"</span></div>"}).join("")+"</div>"+
+ "<div class='card'><h3>Lo que significa</h3><p>Tu clóset equivale a "+eq(co2,ag)+". Las prendas subutilizadas concentran "+fmt(subC)+" kg de CO₂e ("+fmt(100*subC/co2)+"%). Las que se pueden vender o regalar las encuentras en el botón Vender: así su huella ya emitida sigue sirviendo.</p></div>"+
+ "<div class='card'><h3>CO₂e por tipo de prenda (kg)</h3>"+bars(cat)+"</div><div class='card'><h3>¿Qué hacer con tus prendas?</h3>"+bars(rec)+"<p class='note'>Transformar es upcycling: convertir prendas dañadas en bolsos, cojines o accesorios. Reparar alarga la vida útil.</p></div>"+
+ "<div class='row noprint'><button onclick='print()'>Imprimir o guardar PDF</button></div><p class='note'>Factores de referencia aproximados por kg de tela (agua y CO₂e): algodón 10.000 L / 7 kg; denim 11.000 L / 20 kg; poliéster 150 L / 14,2 kg; lana 8.000 L / 13,8 kg.</p>"}
+function addC(){closet.push({tipo:$("ct").value,mat:$("cm").value,cant:Math.max(1,parseInt($("cq").value)||1),precio:Math.max(0,parseFloat($("cp").value)||0),usos:Math.max(0,parseFloat($("cu").value)||0),anios:Math.max(.5,parseFloat($("ca").value)||1),estado:$("ce").value});saveCloset();render()}
+function ejemplo(){closet=[{tipo:"Camiseta",mat:"Algodón",cant:8,precio:35000,usos:30,anios:2,estado:"Bueno"},{tipo:"Jean",mat:"Denim",cant:3,precio:150000,usos:40,anios:2,estado:"Bueno"},{tipo:"Jean",mat:"Denim",cant:2,precio:120000,usos:2,anios:3,estado:"Regular"},{tipo:"Chaqueta",mat:"Poliéster",cant:2,precio:180000,usos:4,anios:2,estado:"Bueno"},{tipo:"Vestido",mat:"Poliéster",cant:4,precio:80000,usos:3,anios:1,estado:"Bueno"},{tipo:"Camisa",mat:"Algodón",cant:3,precio:60000,usos:5,anios:4,estado:"Dañado"}];saveCloset();render()}
+function vend(i){var it=closet[i];draft={cat:"Ropa",tipo:it.tipo,mat:it.mat,kg:TIPO[it.tipo],est:"Bueno",uso:it.usos,ani:it.anios,ori:it.precio};go("vender")}
+init();
+</script></body></html>
